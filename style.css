@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@500&family=Exo:wght@500&family=Open+Sans:wght@500&family=Poppins&display=swap');
+
+@media (min-width: 767px) {
+header, main {
+  display:none;
+}
+.noMobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  background-color: red; 
+  height: 100vh;
+  font-size: 50px;
+  font-weight: bolder;
+}
+}
+
+@media (max-width: 767px) {
+  .noMobile {
+    display: none;
+  }
+  
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: black;
+  color: white;
+}
+main {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 60px;
+  z-index: -10;
+}
+section {
+  position: fixed;
+  top: 190px;
+  width: 100vw;
+}
+/*styling header*/
+header {
+  background-color: #111111;
+  height: 50px;
+  position: fixed;
+  width: 100vw;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+}
+header h1 {
+  font-family: 'poppins', sans-serif;
+  margin-left: 15px;
+  font-size: 20px;
+  padding: 5px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.header .icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+  width: 38%;
+  font-size: 25px;
+  height: 50px;
+}
+#darkThemeIcon {
+  margin-right: 20px;
+}
+#lightThemeIcon {
+  display: none;
+  margin-right: 20px;
+}
+.barIcon {
+  color: white;
+  font-size: 25px;
+  transform: scaleX(1);
+  transition: color 0.3s ease, font-size 0.3s ease, transform 0.5s ease-in-out;
+}
+.barIconActive {
+  font-size: 30px;
+  transform: scaleX(-1);
+  color: grey;
+}
+
+/* styling navbar */
+.navbarList {
+  position: fixed;
+  background-color: #111111;
+  width: 100vw;
+  max-height: 0;
+  overflow: hidden;
+  box-shadow: 0 5px 5px #27A776;
+  transition: max-height 0.5s ease-in-out;
+}
+.navbarListActive{
+  max-height: 23vh;
+}
+.navbarList ul {
+  list-style: none;
+  margin-left: 5px;
+  padding: 10px 20px;
+}
+.navbarList ul li {
+  padding: 10px;
+  font-family: 'open sans', sans-serif;
+}
+.navbarList ul li a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* styling home section */
+#homeSec {
+  display: flex;
+  align-items: center;
+  background-color: #111111;
+  margin-bottom: 15px;
+  position: absolute;
+  top: 0;
+  box-shadow: 5px 5px 15px #27A776;
+  animation: boxShadowAnimation 5s infinite linear;
+}
+@keyframes boxShadowAnimation {
+  0% {
+    box-shadow: 0 0 5px #27A776;
+  }
+  50% {
+    box-shadow: 0 0 5px dodgerblue;
+  }
+  100% {
+    box-shadow: 0 0 5px orangered;
+  }
+}
+
+
+.rightSec {
+  position: absolute;
+  padding: 10px;
+  width: 30vw;
+  display: flex;
+  justify-content: center;
+  right: 0;
+}
+#pfp {
+  height: 130px;
+  position: relative;
+  top: 3.5px;
+}
+
+.leftSec {
+  width: 70vw;
+}
+.leftSec .name {
+  font-family: 'exo', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+}
+.leftCont {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  transform: rotate(-3deg);
+  margin-left: 20px;
+}
+.passion {
+  text-decoration: underline;
+}
+
+/* styling about me section */
+#aboutSec {
+  margin: 15px;
+  padding: 5px;
+  position: fixed;
+}
+#aboutSec h1 {
+  font-family: poppins, sans-serif;
+}
+.aboutMeCont {
+  position: fixed;
+  margin: 5px;
+  margin-top: -5px;
+  padding: 10px;
+}
+.aboutMeCont p {
+  font-family: 'open sans', sans-serif;
+}
+.aboutMeCont p a {
+  text-decoration: none;
+  color: lightblue;
+  font-weight: 600;
+}
+
+.bioData ul {
+  list-style: none;
+}
+.bioData ul li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.bioDataList{
+  position: fixed;
+  background-color: black;
+  margin: 5px;
+  padding-inline: 30px;
+  padding-block: 10px;
+  border-radius: 10px;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in, margin-top 0.3s ease-in, background-color 0.3s ease-in;
+}
+.bioDataListActive {
+  margin-top: 50px;
+  max-height: 23vh;
+  background-color: #111111;
+}
+.bioDataList li {
+  padding-block: 10px;
+  font-family: 'Open Sand', sans-serif;
+}
+.icons {
+  color: #27A776;
+}
+
+.dropDown {
+  margin-block: 10px;
+  padding: 5px;
+  box-shadow: 2px 2px 5px #27A776;
+  border-radius: 10px;
+  display: flex; 
+  justify-content: space-around;
+  font-family: 'exo', sans-serif;
+  background-color: #111111;
+  position: absolute;
+  z-index: 10;
+  width: 80vw;
+  height: 3vh;
+  transition: background-color 0.3s ease;
+}
+.dropDownActive {
+  background-color: #0f0f0f;
+}
+.dropDownArrow {
+  transform: rotate(0deg);
+  color: white;
+  transition: transform 0.3s ease-in, color 0.3s ease-in;
+}
+.dropDownArrowActive {
+  transform: rotate(-90deg);
+  color: dimgrey;
+}
+  }
