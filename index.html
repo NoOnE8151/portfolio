@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lomash - Portfolio</title>
+
+  <!-- Custom Styles -->
+ <link rel="stylesheet" href="style.css">
+
+  <!--custom icons-->
+ <script async src="https://kit.fontawesome.com/975b15b9ef.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header">
+      <h1 class="name"><i class="fa-solid fa-at"></i> Lomash Jangde</h1>
+      <div class="icons">
+    <span><i id="darkThemeIcon" class="fa-solid fa-moon"></i><i id="lightThemeIcon" class="fa-solid fa-sun"></i> <i id="barIcon" class="fa-solid fa-bars-staggered barIcon"></i></span>
+    </div>
+    </div>
+        <nav>
+    <div id="navbar" class="navbarList">
+      <ul>
+        <li><a href="#aboutSec">About Me</a></li>
+        <li><a onClick="popUp()" href="#projectSec">Projects</a></li>
+        <li><a href="#">Contact Me</a></li>
+      </ul>
+    </div>
+  </nav>
+  </header>
+      <!--no mobile display -->
+      <div class="noMobile">
+        YOU CANNOT ACCESS THIS SITE FROM COMPUTER PLEASE TRY WITH MOBILE PHONE!!
+      </div>
+  <main>
+    <section id="homeSec">
+      <div class="leftSec">
+        <div class="leftCont">
+        <div class="name">Lomash Jangde</div>
+        <div class="passion">I'm Web Developer</div>
+      </div>
+      </div>
+       <div class="rightSec">
+        <div class="pfpCont">
+        <img id="pfp" src="assets/img/pfp.png" alt="profile picture">
+        </div>
+      </div>
+    </section>
+    <section id="aboutSec">
+      <h1>About Me</h1>
+      <div class="aboutMeCont">
+        <p>
+          Hello! I'm <b>Lomash Jangde</b> a passionate web developer from <b>India, Chhattisgarh</b> as the founder of <a href="https://instagram.com/codeconquests_?igshid=OGQ5ZDc2ODk2ZA==">codeConquests</a> I am on mission to master the Full Stack Web Development.
+        </p>
+        <div id="dropDown" class="dropDown">Click to know more about me <span id="dropDownArrow" class="dropDownArrow"><i class="fa-solid fa-angle-left"></i></span></div>
+        <div class="bioData">
+          <ul id="bioDataList" class="bioDataList">
+            <li><i class="fa-solid fa-angle-right icons"></i> <b>Birthday:</b> 20 April 2006</li>
+            <li><i class="fa-solid fa-angle-right icons"></i><b>Whatsapp:</b> +91 6204246057</li>
+            <li><i class="fa-solid fa-angle-right icons"></i><b>City:</b> Raigarh</li>
+            <li><i class="fa-solid fa-angle-right icons"></i><b>Email:</b> lomash265@gmail.com</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+  <footer>
+    <div style="position: absolute; z-index: 10; bottom: 0; left: 25vw; color: grey;">
+      Copyright © 2023 lomash
+    </div>
+  </footer>
+   <!--javascript-->
+  <script src="main.js"></script>
+</body>
+              </html>
