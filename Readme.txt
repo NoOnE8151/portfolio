@@ -1,4 +1,4 @@
-Thanks for downloading this template!
+👋 Hello, welcome to my portfolio, this site is made using bootstrap template.
 
 Template Name: Personal
 Template URL: https://bootstrapmade.com/personal-free-resume-bootstrap-template/
