@@ -1,0 +1,24 @@
+ @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-50% - 2.5rem));
+          }
+        }
+        
+        .scroll-container {
+          animation: scroll 20s linear infinite;
+          display: flex;
+          width: max-content;
+        }
+        
+        .scroll-container:hover {
+          animation-play-state: paused;
+        }
+        
+        .logo-group {
+          display: flex;
+          align-items: center;
+          gap: 5rem;
+        }

@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./ghost.css";
+import "./animations/slide-fadeup.css"
+import "./animations/float.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +26,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <div id="cursor"></div>
       </body>
     </html>
   );
