@@ -1,12 +1,20 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import Link from "next/link";
 import ProjectCard from "./components/ProjectCard";
 import { projectsData } from "./projectData";
 import { useForm } from "react-hook-form";
+import SuccessMessage from "./components/SuccessMessage";
 
 const Home = () => {
+  //mobile warning
+  const [isWarning, setIsWarning] = useState(false);
+
+  useEffect(() => {
+    setIsWarning(true);
+  }, []);
+
   //ghost animation
   useEffect(() => {
     // eye movement
@@ -25,6 +33,8 @@ const Home = () => {
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
+
+  // custom cursor
   useEffect(() => {
     const cursor = document.getElementById("cursor");
     const moveCursor = (e) => {
@@ -100,47 +110,77 @@ const Home = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      subject: "Inquiry Regarding Project or Collaboration",
       message:
         "Hello, I am interested in connecting regarding a potential project or collaboration.",
     },
   });
 
-  const contactSubmit = async (data) => { 
-    console.log("contact form data", data);
-   }
+  //this state is to prevent multiclicks on send button
+  const [isSending, setIsSending] = useState(false);
+
+  //this will manage success interface
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const contactSubmit = async (data) => {
+    setIsSending(true);
+    const payload = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      subject: data.subject,
+      message: data.message,
+    };
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const r = await res.json();
+    console.log(r);
+
+    setIsSending(false);
+    setShowSuccess(true);
+    reset();
+  };
 
   return (
     <div className="h-screen">
-      <header className="flex justify-end w-full items-center h-[10%] fixed top-0">
-        <nav className="flex gap-5 justify-between items-center text-xl  h-full px-10 relative rounded-bl-3xl">
-          <Link className="z-20" href={"#hero"}>
+      <header className="flex justify-end w-full items-center h-[10%] fixed top-0 z-50">
+        <nav className="flex gap-5 justify-between items-center text-lg md:text-xl  h-full md:px-10 px-5 relative rounded-bl-3xl z-60">
+          <Link className="pointer-cursor" href={"#hero"}>
             Home
           </Link>
-          <Link className="z-20" href={"#about"}>
+          <Link className="pointer-cursor" href={"#about"}>
             About
           </Link>
-          <Link className="z-20" href={"#projects"}>
+          <Link className="pointer-cursor" href={"#projects"}>
             Projects
           </Link>
-          <Link className="z-20" href={"#contact"}>
+          <Link className="pointer-cursor" href={"#contact"}>
             Contact
           </Link>
         </nav>
       </header>
-      <main className="h-[90%]">
-        <section id="hero" className="h-full w-full flex items-center ">
-          <div className="w-[70%] h-full pl-28 py-10 flex items-center">
+      <main className="h-[90%] w-screen">
+        <section id="hero" className="h-full w-full flex flex-col md:flex-row justify-center md:justify-start items-center px-5">
+          <div className="w-[70%] h-full md:pl-28 py-10 flex items-center z-50">
             <div className="flex flex-col gap-3">
-              <h1 className="text-8xl font-bold font-ubuntu">Lomash Jangde</h1>
-              <p className="text-3xl font-semibold">
+              <h1 className="text-4xl md:text-8xl font-bold font-ubuntu">Lomash&nbsp;Jangde</h1>
+              <p className="md:text-3xl text-xl font-semibold">
                 A Fullstack Web Developer
               </p>
               <a
                 data-no-cursor="true"
-                href="#"
+                href="#contact"
                 className="text-2xl underline hover:bg-white hover:text-black hover:px-5 hover:py-2 hover:rounded-lg transition-all duration-700 w-fit"
               >
                 Connect
@@ -148,7 +188,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="w-[30%] h-full flex justify-center items-center">
+          <div className="w-[30%] h-full hidden md:flex justify-center items-center z-10">
             <div className="ghost">
               <div className="body"></div>
               <div className="arm left"></div>
@@ -168,10 +208,10 @@ const Home = () => {
 
         <section
           id="about"
-          className="py-10 h-full w-full flex flex-col justify-center items-center px-28 gap-16"
+          className="py-10 md:h-full w-full flex flex-col justify-center items-center px-5 md:px-28 md:gap-16 gap-5"
         >
-          <h2 className="text-6xl font-semibold">About me</h2>
-          <p className="text-5xl text-justify leading-16">
+          <h2 className="md:text-6xl text-4xl font-semibold">About me</h2>
+          <p className="md:text-5xl text-2xl text-justify md:leading-16">
             I am a Full-Stack MERN Developer focused on building clean,
             reliable, and efficient web applications. I follow a disciplined
             approach to development and value clarity, structure, and long-term
@@ -182,9 +222,9 @@ const Home = () => {
 
         <section
           id="projects"
-          className="py-10 w-full flex flex-col justify-center items-center px-28 gap-16"
+          className="py-10 w-full flex flex-col justify-center items-center md:px-28 md:gap-16 gap-10"
         >
-          <h2 className="text-6xl font-semibold">Projects</h2>
+          <h2 className="md:text-6xl text-4xl font-semibold">Projects</h2>
 
           <div className="flex flex-col gap-20">
             {projectsData.map((project, idx) => (
@@ -195,16 +235,16 @@ const Home = () => {
 
         <section
           id="skills"
-          className="py-10 w-full flex flex-col justify-center items-center px-28 gap-16 overflow-hidden"
+          className="py-10 w-full flex flex-col justify-center items-center md:px-28 gap-16 overflow-hidden"
         >
-          <h2 className="text-6xl font-semibold">Skills</h2>
-          <div className="grid grid-cols-6 gap-20">
+          <h2 className="text-4xl md:text-6xl font-semibold">Skills</h2>
+          <div className="grid md:grid-cols-6 grid-cols-4 w-full md:gap-20 gap-5">
             {logos.map((logo, idx) => (
               <div
                 key={idx}
-                className="flex flex-col items-center gap-5 float transition-transform duration-500 hover:scale-125"
+                className="flex flex-col items-center gap-3 md:gap-5 float transition-transform duration-500 hover:scale-125"
               >
-                <div className="w-32 h-32 flex items-center justify-center">
+                <div className="md:w-32 md:h-32 h-20 w-20 flex items-center justify-center">
                   <img
                     src={logo.src}
                     alt={logo.alt}
@@ -218,20 +258,26 @@ const Home = () => {
         </section>
 
         <section>
-          <h2 id="contact" className="text-6xl font-semibold text-center py-10">
+          <h2 id="contact" className="md:text-6xl text-4xl font-semibold text-center md:py-10 py-5">
             Get in Touch
           </h2>
 
-          <div className="w-full flex items-center relative">
-            <form onSubmit={handleSubmit(contactSubmit)} className="w-full flex flex-col gap-5 mx-16 items-center">
-              <div className="w-[50%] border-2 border-gray-300 rounded-xl p-10 flex flex-col gap-5">
+          <div className="w-full flex flex-col md:flex-row items-center relative">
+            <form
+              onSubmit={handleSubmit(contactSubmit)}
+              className="w-full flex flex-col gap-5 mx-16 items-center"
+            >
+              <div className="md:w-[50%] w-full border-2 border-gray-300 rounded-xl p-10 flex flex-col gap-5">
                 <h2 className="text-4xl font-semibold mb-5">Contact Me</h2>
                 <div className="flex gap-3 flex-col">
                   <label className="text-2xl">Name</label>
                   <input
+                    disabled={isSending}
                     type="text"
                     placeholder="Your Name"
-                    className="border-2 border-gray-300 px-5 py-2 rounded-lg capitalize"
+                    className={`border-2 border-gray-300 px-5 py-2 rounded-lg capitalize ${
+                      isSending ? "cursor-not-allowed" : "cursor-text"
+                    }`}
                     {...register("name", {
                       required: {
                         value: true,
@@ -239,23 +285,28 @@ const Home = () => {
                       },
                       minLength: {
                         value: 3,
-                        message: "minimum name lenght is 3 letters"
+                        message: "minimum name lenght is 3 letters",
                       },
                       maxLength: {
                         value: 50,
-                        message: "maximum name length is 50 letters"
-                      }
+                        message: "maximum name length is 50 letters",
+                      },
                     })}
                   />
-                  {errors.name && <div className="text-red-500">{errors.name.message}</div>}
+                  {errors.name && (
+                    <div className="text-red-500">{errors.name.message}</div>
+                  )}
                 </div>
 
                 <div className="flex gap-3 flex-col">
                   <label className="text-2xl">Email</label>
                   <input
+                    disabled={isSending}
                     type="email"
                     placeholder="Your Email"
-                    className="border-2 border-gray-300 px-5 py-2 rounded-lg"
+                    className={`border-2 border-gray-300 px-5 py-2 rounded-lg ${
+                      isSending ? "cursor-not-allowed" : "cursor-text"
+                    }`}
                     {...register("email", {
                       required: {
                         value: true,
@@ -263,22 +314,89 @@ const Home = () => {
                       },
                       minLength: {
                         value: 3,
-                        message: "minimum email lenght is 3 letters"
+                        message: "minimum email lenght is 3 letters",
                       },
                       maxLength: {
                         value: 50,
-                        message: "maximum email length is 50 letters"
-                      }
+                        message: "maximum email length is 50 letters",
+                      },
                     })}
                   />
-                  {errors.email && <div className="text-red-500">{errors.email.message}</div>}
+                  {errors.email && (
+                    <div className="text-red-500">{errors.email.message}</div>
+                  )}
+                </div>
+
+                <div className="flex gap-3 flex-col">
+                  <label className="text-2xl">Phone</label>
+                  <input
+                    disabled={isSending}
+                    type="text"
+                    placeholder="1987654321"
+                    className={`border-2 border-gray-300 px-5 py-2 rounded-lg ${
+                      isSending ? "cursor-not-allowed" : "cursor-text"
+                    }`}
+                    {...register("phone", {
+                      required: {
+                        value: true,
+                        message: "please enter your contact number",
+                      },
+                      minLength: {
+                        value: 10,
+                        message: "minimum lenght is 10 digit",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "maximum length is 10 letters",
+                      },
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message: "Enter a valid 10-digit number",
+                      },
+                    })}
+                  />
+                  {errors.phone && (
+                    <div className="text-red-500">{errors.phone.message}</div>
+                  )}
+                </div>
+
+                <div className="flex gap-3 flex-col">
+                  <label className="text-2xl">Subject</label>
+                  <input
+                    disabled={isSending}
+                    type="text"
+                    placeholder="e.g Inquery Regarding Collabration"
+                    className={`border-2 border-gray-300 px-5 py-2 rounded-lg ${
+                      isSending ? "cursor-not-allowed" : "cursor-text"
+                    }`}
+                    {...register("subject", {
+                      required: {
+                        value: true,
+                        message: "please write a subject",
+                      },
+                      minLength: {
+                        value: 3,
+                        message: "minimum lenght is 3 letters",
+                      },
+                      maxLength: {
+                        value: 70,
+                        message: "maximum length is 70 letters",
+                      },
+                    })}
+                  />
+                  {errors.subject && (
+                    <div className="text-red-500">{errors.subject.message}</div>
+                  )}
                 </div>
 
                 <div className="flex gap-3 flex-col">
                   <label className="text-2xl">Message</label>
                   <textarea
+                    disabled={isSending}
                     placeholder="Enter your message"
-                    className="border-2 border-gray-300 px-5 py-2 rounded-lg"
+                    className={`border-2 border-gray-300 px-5 py-2 rounded-lg ${
+                      isSending ? "cursor-not-allowed" : "cursor-text"
+                    }`}
                     {...register("message", {
                       required: {
                         value: true,
@@ -286,28 +404,41 @@ const Home = () => {
                       },
                       minLength: {
                         value: 20,
-                        message: "minimum message lenght is 20 letters"
+                        message: "minimum message lenght is 20 letters",
                       },
                       maxLength: {
                         value: 500,
-                        message: "maximum name length is 500 letters"
-                      }
+                        message: "maximum name length is 500 letters",
+                      },
                     })}
                   ></textarea>
-                  {errors.message && <div className="text-red-500">{errors.message.message}</div>}
+                  {errors.message && (
+                    <div className="text-red-500">{errors.message.message}</div>
+                  )}
                 </div>
 
                 <div className="w-full flex items-center justify-end">
-                  <input
+                  <button
+                    disabled={isSending}
                     type="submit"
-                    value="Send Message"
-                    className="w-fit border-2 border-gray-300 px-5 py-2 rounded-lg my-2 hover:bg-gray-300 hover:text-black transition-colors duration-500"
-                  />
+                    className={`w-fit border-2 border-gray-300 px-5 py-2 rounded-lg my-2 hover:bg-gray-300 hover:text-black transition-colors duration-500 ${
+                      isSending ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
+                  >
+                    {isSending ? (
+                      <div className="flex items-center gap-3">
+                        {" "}
+                        <div className="loader"></div> Sending
+                      </div>
+                    ) : (
+                      "Send Message"
+                    )}
+                  </button>
                 </div>
               </div>
             </form>
 
-            <div className="w-[30%] absolute right-0 h-full flex items-center justify-end">
+            <div className="w-[30%] absolute right-0 h-full flex items-center justify-end z-20">
               <div className="w-[60%] border-l-2 border-t-2 border-b-2 border-gray-300 rounded-xl px-14 py-10 flex flex-col gap-8">
                 <h3 className="font-semibold text-xl">Social Handles</h3>
                 {links.map((link, idx) => {
@@ -328,9 +459,19 @@ const Home = () => {
           </div>
         </section>
 
+        {showSuccess && <SuccessMessage setShowSuccess={setShowSuccess} />}
+
         <footer className="py-16 w-full flex items-center justify-center">
           <a className="font-semibold text-xl">&copy; Lomash Jangde</a>
         </footer>
+
+            { isWarning && <div className='fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black/70 w-screen z-50 md:hidden'>
+        <div className='bg-black rounded-xl py-12 px-10 flex flex-col gap-5 items-center md:w-[40%] w-[90%]' style={{ boxShadow: "0 4px 12px #00FF7F" }}>
+            <h2 className='text-2xl font-semibold'>Warning</h2>
+            <p>This website is meant to be visited on desktop, mobile view can affect user experience significantly</p>
+            <button onClick={()=> setIsWarning(false)} className='bg-[#00FF7F] hover:bg-[#00cf67] active:bg-[#00FF7F] text-black px-5 rounded-lg py-2 text-lg w-1/2 font-semibold cursor-pointer'>Got it</button>
+        </div>
+    </div>}
       </main>
     </div>
   );

@@ -3,8 +3,8 @@ import { ExternalLink } from "lucide-react";
 
 const ProjectCard = ({ project }) => {
   return (
-    <div className="flex gap-12">
-      <div className="w-[50%] h-full overflow-hidden rounded-xl flex flex-col justify-center items-center gap-5 border-2 border-gray-300 p-3">
+    <div className="flex flex-col md:flex-row md:gap-12 gap-5">
+      <div className="md:w-[50%] w-full h-full overflow-hidden rounded-xl flex flex-col justify-center items-center gap-5 border-2 border-gray-300 p-3">
         <div className="group w-full h-64 [perspective:1000px] overflow-hidden rounded-xl">
           <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] rounded-xl">
             {/* Front side (Image) */}
@@ -51,7 +51,7 @@ const ProjectCard = ({ project }) => {
           </a>
         </div>
       </div>
-      <p className="w-[50%] text-xl h-full py-3">{project.description}</p>
+      <p className="md:w-[50%] w-full text-xl h-full py-3">{project.description}</p>
     </div>
   );
 };
