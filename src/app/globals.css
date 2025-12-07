@@ -26,6 +26,10 @@ body {
   font-family: "Ubuntu", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* custom cursor */
 #cursor {
   position: fixed;

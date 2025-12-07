@@ -15,6 +15,6 @@ export const projectsData = [
       "Tailwind CSS",
       "JWT Authentication",
     ],
-    link: "#",
+    link: "https://digimart-lime.vercel.app/",
   }
 ];
